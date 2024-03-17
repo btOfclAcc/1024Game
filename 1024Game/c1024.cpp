@@ -33,12 +33,12 @@ void c1024::EvalCurFrame()
 		return;
 	}
 
-	if (levelWon)
+	if (gameWon)
 	{
 		if (IsKeyPressed(KEY_ENTER))
 		{
 			Start();
-			levelWon = false;
+			gameWon = false;
 		}
 
 		return;
@@ -66,7 +66,7 @@ void c1024::DrawCurFrame()
 			GetScreenHeight() / 2 - 15,
 			30, GRAY);
 	}
-	else if (levelWon)
+	else if (gameWon)
 	{
 		DrawText("You Won! Press Enter to go to next level!",
 			GetScreenWidth() / 2 - MeasureText("You Won! Press Enter to go to next level!", 30) / 2,

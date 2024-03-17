@@ -2,6 +2,7 @@
 #include <vector>
 #include <string>
 #include "raylib.h"
+#include "Cell.h"
 
 #ifndef C1024_H
 #define C1024_H
@@ -10,25 +11,20 @@ class c1024
 {
 public:
 
-#define GAP 8
-#define CELL_HEIGHT 100
+#define GAP 10
+#define CELL_HEIGHT 200
 
-	typedef struct Cell {
-		int number;
-		Color color;
-		Rectangle rect;
-		void Draw() { DrawRectangleRounded(rect, 0.3f, 8, color); }
-	} Cell;
-	std::vector<Cell> cells;
+	
+	std::vector<std::vector<Cell>> cells;
 
 
 	bool gamePaused = false;
 	bool gameOver = false;
-	bool levelWon = false;
+	bool gameWon = false;
 
 
-	static const int screenWidth = 800;
-	static const int screenHeight = 450;
+	static const int screenWidth = 850;
+	static const int screenHeight = 850;
 
 
 	void Main();
