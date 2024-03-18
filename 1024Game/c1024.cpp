@@ -160,15 +160,15 @@ void c1024::Slide(std::string dir)
 		for (int j = 0; j < 4; j++) {
 			for (int x = 0; x < 4; x++) {
 				for (int i = 0; i < 3; i++) {
-					if (cells[i][j].number == 0) {
+					if (cells[i][j].number == 0) { // Move through blank cell
 						cells[i][j].number = cells[i + 1][j].number;
 						cells[i + 1][j].number = 0;
 						cells[i][j].merged = cells[i + 1][j].merged;
 						cells[i + 1][j].merged = 0;
 					}
-					else if (cells[i][j].number == cells[i + 1][j].number && !cells[i][j].merged && !cells[i + 1][j].merged) {
+					else if (cells[i][j].number == cells[i + 1][j].number && !cells[i][j].merged && !cells[i + 1][j].merged) { // Merge cells
 						cells[i][j].number *= 2;
-						cells[i][j].merged = true;
+						cells[i][j].merged = true; // Double Merge Prevention
 						cells[i + 1][j].number = 0;
 					}
 				}
@@ -233,9 +233,9 @@ void c1024::Slide(std::string dir)
 		}
 	}
 
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < 4; i++) 
 		for (int j = 0; j < 4; j++)
-			cells[i][j].merged = false;
+			cells[i][j].merged = false; // Merge preventer resets
 }
 
 void c1024::newNumber()
@@ -256,7 +256,7 @@ void c1024::Main()
 
 	Start();
 
-	SetTargetFPS(60);
+	SetTargetFPS(300);
 	while (!WindowShouldClose())
 	{
 		Update();
@@ -289,7 +289,7 @@ void c1024::Start()
 		}
 	}
 
-	if (debug) {
+	if (debug) { // Debug tool
 		// Horizontal
 		cells[0][0].number = 0;
 		cells[0][1].number = 0;
@@ -365,15 +365,15 @@ void c1024::DrawCurFrame()
 
 	if (gameOver)
 	{
-		DrawText("Press Enter to play again",
-			GetScreenWidth() / 2 - MeasureText("Press Enter to play again", 30) / 2,
+		DrawText("Out of Moves. Press Enter to play again.",
+			GetScreenWidth() / 2 - MeasureText("Out of Moves. Press Enter to play again.", 30) / 2,
 			GetScreenHeight() / 2 - 15,
 			30, GRAY);
 	}
 	else if (gameWon)
 	{
-		DrawText("You Won! Press Enter to go to next level!",
-			GetScreenWidth() / 2 - MeasureText("You Won! Press Enter to go to next level!", 30) / 2,
+		DrawText("You Won! Press Enter to go to play again!",
+			GetScreenWidth() / 2 - MeasureText("You Won! Press Enter to go to play again!", 30) / 2,
 			GetScreenHeight() / 2 - 15,
 			30, GRAY);
 	}
@@ -386,10 +386,6 @@ void c1024::DrawCurFrame()
 			cells[i / 4][i % 4].DrawCell();
 		}
 	}
-
-
-
-
 
 	EndDrawing();
 }
