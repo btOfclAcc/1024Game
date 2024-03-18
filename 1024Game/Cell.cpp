@@ -72,6 +72,8 @@ void Cell::DrawCell()
 		break;
 
 	default:
+		color = WHITE;
+		txtStr = std::to_string(number);
 		break;
 	}
 

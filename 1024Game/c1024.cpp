@@ -66,7 +66,82 @@ bool c1024::canMove(std::string dir)
 
 void c1024::Slide(std::string dir)
 {
-	
+	if (dir == "up") {
+		for (int j = 0; j < 4; j++) {
+			for (int x = 0; x < 4; x++) {
+				for (int i = 0; i < 3; i++) {
+					if (cells[i][j].number == 0) {
+						cells[i][j].number = cells[i + 1][j].number;
+						cells[i + 1][j].number = 0;
+					}
+					else if (cells[i][j].number == cells[i + 1][j].number) {
+						cells[i][j].number *= 2;
+						cells[i + 1][j].number = 0;
+					}
+				}
+			}
+		}
+	}
+	else if (dir == "down") {
+		for (int j = 0; j < 4; j++) {
+			for (int x = 0; x < 4; x++) {
+				for (int i = 3; i > 0; i--) {
+					if (cells[i][j].number == 0) {
+						cells[i][j].number = cells[i - 1][j].number;
+						cells[i - 1][j].number = 0;
+					}
+					else if (cells[i][j].number == cells[i - 1][j].number) {
+						cells[i][j].number *= 2;
+						cells[i - 1][j].number = 0;
+					}
+				}
+			}
+		}
+	}
+	else if (dir == "left") {
+		for (int i = 0; i < 4; i++) {
+			for (int x = 0; x < 4; x++) {
+				for (int j = 0; j < 3; j++) {
+					if (cells[i][j].number == 0) {
+						cells[i][j].number = cells[i][j + 1].number;
+						cells[i][j + 1].number = 0;
+					}
+					else if (cells[i][j].number == cells[i][j + 1].number) {
+						cells[i][j].number *= 2;
+						cells[i][j + 1].number = 0;
+					}
+				}
+			}
+		}
+	}
+	else if (dir == "right") {
+		for (int i = 0; i < 4; i++) {
+			for (int x = 0; x < 4; x++) {
+				for (int j = 3; j > 0; j--) {
+					if (cells[i][j].number == 0) {
+						cells[i][j].number = cells[i][j - 1].number;
+						cells[i][j - 1].number = 0;
+					}
+					else if (cells[i][j].number == cells[i][j - 1].number) {
+						cells[i][j].number *= 2;
+						cells[i][j - 1].number = 0;
+					}
+				}
+			}
+		}
+	}
+}
+
+void c1024::newNumber()
+{
+	while (true) {
+		int i = rand() % 4;
+		int j = rand() % 4;
+		if (cells[i][j].number == 0) {
+			cells[i][j].number = 2;
+			break;
+		}
+	}
 }
 
 void c1024::Main()
@@ -95,6 +170,17 @@ void c1024::Start()
 			cells[row].push_back(temp);
 		}
 	}
+
+	for (int row = 0; row < 4; row++) {
+		grid.push_back({});
+		for (int col = 0; col < 4; col++) {
+			Rectangle rect = Rectangle{ (GAP + ((GAP + cellSize) * col)) , (GAP + ((GAP + cellSize) * row)) , cellSize , cellSize };
+			Cell temp(rect, 0);
+			grid[row].push_back(temp);
+		}
+	}
+
+	newNumber();
 }
 
 void c1024::EvalCurFrame()
@@ -121,8 +207,22 @@ void c1024::EvalCurFrame()
 		return;
 	}
 
-
-	
+	if (IsKeyPressed(KEY_UP) && canMove("ver")) {
+		Slide("up");
+		newNumber();
+	}
+	if (IsKeyPressed(KEY_DOWN) && canMove("ver")) {
+		Slide("down");
+		newNumber();
+	}
+	if (IsKeyPressed(KEY_LEFT) && canMove("hor")) {
+		Slide("left");
+		newNumber();
+	}
+	if (IsKeyPressed(KEY_RIGHT) && canMove("hor")) {
+		Slide("right");
+		newNumber();
+	}
 }
 
 
@@ -147,10 +247,13 @@ void c1024::DrawCurFrame()
 	}
 	else
 	{
-
+		for (int i = 0; i < (4 * 4); i++) {
+			grid[i / 4][i % 4].DrawCell();
+		}
 		for (int i = 0; i < (4 * 4); i++) {
 			cells[i / 4][i % 4].DrawCell();
 		}
+		
 
 	}
 

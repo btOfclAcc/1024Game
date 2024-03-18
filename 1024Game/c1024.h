@@ -15,6 +15,7 @@ public:
 
 	
 	std::vector<std::vector<Cell>> cells;
+	std::vector<std::vector<Cell>> grid;
 
 
 	bool gamePaused = false;
@@ -30,6 +31,7 @@ public:
 	bool canMove();
 	bool canMove(std::string);
 	void Slide(std::string);
+	void newNumber();
 
 
 	void Main();
