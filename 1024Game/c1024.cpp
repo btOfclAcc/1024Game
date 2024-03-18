@@ -28,36 +28,126 @@ bool c1024::canMove()
 bool c1024::canMove(std::string dir)
 {
 	if (canMove()) {
-		if (dir == "ver") {
+		if (dir == "up") {
 			for (int i = 0; i < 4; i++) {
-				if (cells[i][0].number == cells[i][1].number)
-					return true;
-				if (cells[i][0].number == cells[i][2].number)
-					return true;
-				if (cells[i][0].number == cells[i][3].number)
-					return true;
-				if (cells[i][1].number == cells[i][2].number)
-					return true;
-				if (cells[i][1].number == cells[i][3].number)
-					return true;
-				if (cells[i][2].number == cells[i][3].number)
-					return true;
+				// Merge detection
+				if (cells[0][i].number == cells[1][i].number && cells[0][i].number != 0)
+						return true;
+				if (cells[1][i].number == cells[2][i].number && cells[1][i].number != 0)
+						return true;
+				if (cells[2][i].number == cells[3][i].number && cells[2][i].number != 0)
+						return true;
+				if (cells[0][i].number == cells[2][i].number && cells[0][i].number != 0)
+					if (cells[1][i].number == 0)
+						return true;
+				if (cells[1][i].number == cells[3][i].number && cells[1][i].number != 0)
+					if (cells[2][i].number == 0)
+						return true;
+				if (cells[0][i].number == cells[3][i].number && cells[0][i].number != 0)
+					if (cells[1][i].number == 0)
+						if (cells[2][i].number == 0)
+							return true;
+
+				// Gap detection
+				if (cells[3][i].number != 0)
+					if (cells[2][i].number == 0 || cells[1][i].number == 0 || cells[0][i].number == 0)
+						return true;
+				if (cells[2][i].number != 0)
+					if (cells[1][i].number == 0 || cells[0][i].number == 0)
+						return true;
+				if (cells[1][0].number != 0)
+					if (cells[0][i].number == 0)
+						return true;
 			}
 		}
-		else if (dir == "hor") {
+		else if (dir == "down") {
 			for (int i = 0; i < 4; i++) {
-				if (cells[0][i].number == cells[1][i].number)
+				if (cells[0][i].number == cells[1][i].number && cells[0][i].number != 0)
 					return true;
-				if (cells[0][i].number == cells[2][i].number)
+				if (cells[1][i].number == cells[2][i].number && cells[1][i].number != 0)
 					return true;
-				if (cells[0][i].number == cells[3][i].number)
+				if (cells[2][i].number == cells[3][i].number && cells[2][i].number != 0)
 					return true;
-				if (cells[1][i].number == cells[2][i].number)
+				if (cells[0][i].number == cells[2][i].number && cells[0][i].number != 0)
+					if (cells[1][i].number == 0)
+						return true;
+				if (cells[1][i].number == cells[3][i].number && cells[1][i].number != 0)
+					if (cells[2][i].number == 0)
+						return true;
+				if (cells[0][i].number == cells[3][i].number && cells[0][i].number != 0)
+					if (cells[1][i].number == 0)
+						if (cells[2][i].number == 0)
+							return true;
+
+				if (cells[0][i].number != 0)
+					if (cells[1][i].number == 0 || cells[2][i].number == 0 || cells[3][i].number == 0)
+						return true;
+				if (cells[1][i].number != 0)
+					if (cells[2][i].number == 0 || cells[3][i].number == 0)
+						return true;
+				if (cells[2][0].number != 0)
+					if (cells[3][i].number == 0)
+						return true;
+			}
+		}
+		else if (dir == "left") {
+			for (int i = 0; i < 4; i++) {
+				if (cells[i][0].number == cells[i][1].number && cells[i][0].number != 0)
 					return true;
-				if (cells[1][i].number == cells[3][i].number)
+				if (cells[i][1].number == cells[i][2].number && cells[i][1].number != 0)
 					return true;
-				if (cells[2][i].number == cells[3][i].number)
+				if (cells[i][2].number == cells[i][3].number && cells[i][2].number != 0)
 					return true;
+				if (cells[i][0].number == cells[i][2].number && cells[i][0].number != 0)
+					if (cells[i][1].number == 0)
+						return true;
+				if (cells[i][1].number == cells[i][3].number && cells[i][1].number != 0)
+					if (cells[i][2].number == 0)
+						return true;
+				if (cells[i][0].number == cells[i][3].number && cells[i][0].number != 0)
+					if (cells[i][1].number == 0)
+						if (cells[i][2].number == 0)
+							return true;
+
+				if (cells[i][3].number != 0)
+					if (cells[i][2].number == 0 || cells[i][1].number == 0 || cells[i][0].number == 0)
+						return true;
+				if (cells[i][2].number != 0)
+					if (cells[i][1].number == 0 || cells[i][0].number == 0)
+						return true;
+				if (cells[i][1].number != 0)
+					if (cells[i][0].number == 0)
+						return true;
+			}
+		}
+		else if (dir == "right") {
+			for (int i = 0; i < 4; i++) {
+				if (cells[i][0].number == cells[i][1].number && cells[i][0].number != 0)
+					return true;
+				if (cells[i][1].number == cells[i][2].number && cells[i][1].number != 0)
+					return true;
+				if (cells[i][2].number == cells[i][3].number && cells[i][2].number != 0)
+					return true;
+				if (cells[i][0].number == cells[i][2].number && cells[i][0].number != 0)
+					if (cells[i][1].number == 0)
+						return true;
+				if (cells[i][1].number == cells[i][3].number && cells[i][1].number != 0)
+					if (cells[i][2].number == 0)
+						return true;
+				if (cells[i][0].number == cells[i][3].number && cells[i][0].number != 0)
+					if (cells[i][1].number == 0)
+						if (cells[i][2].number == 0)
+							return true;
+
+				if (cells[i][0].number != 0)
+					if (cells[i][1].number == 0 || cells[i][2].number == 0 || cells[i][3].number == 0)
+						return true;
+				if (cells[i][1].number != 0)
+					if (cells[i][2].number == 0 || cells[i][3].number == 0)
+						return true;
+				if (cells[i][2].number != 0)
+					if (cells[i][3].number == 0)
+						return true;
 			}
 		}
 	}
@@ -134,7 +224,7 @@ void c1024::Slide(std::string dir)
 
 void c1024::newNumber()
 {
-	while (true) {
+	while (!isFull()) {
 		int i = rand() % 4;
 		int j = rand() % 4;
 		if (cells[i][j].number == 0) {
@@ -162,6 +252,9 @@ void c1024::Start()
 {
 	float cellSize = (screenHeight - (GAP * (4 + 1))) / 4;
 
+	cells.clear();
+	grid.clear();
+	
 	for (int row = 0; row < 4; row++) {
 		cells.push_back({});
 		for (int col = 0; col < 4; col++) {
@@ -181,10 +274,18 @@ void c1024::Start()
 	}
 
 	newNumber();
+	newNumber();
 }
 
 void c1024::EvalCurFrame()
 {
+	if (!canMove())
+		gameOver = true;
+	
+	for (int i = 0; i < (4 * 4); i++)
+		if (cells[i / 4][i % 4].number == 1024)
+			gameWon = true;
+
 	if (gameOver)
 	{
 		if (IsKeyPressed(KEY_ENTER))
@@ -207,19 +308,19 @@ void c1024::EvalCurFrame()
 		return;
 	}
 
-	if (IsKeyPressed(KEY_UP) && canMove("ver")) {
+	if (IsKeyPressed(KEY_UP) && canMove("up")) {
 		Slide("up");
 		newNumber();
 	}
-	if (IsKeyPressed(KEY_DOWN) && canMove("ver")) {
+	if (IsKeyPressed(KEY_DOWN) && canMove("down")) {
 		Slide("down");
 		newNumber();
 	}
-	if (IsKeyPressed(KEY_LEFT) && canMove("hor")) {
+	if (IsKeyPressed(KEY_LEFT) && canMove("left")) {
 		Slide("left");
 		newNumber();
 	}
-	if (IsKeyPressed(KEY_RIGHT) && canMove("hor")) {
+	if (IsKeyPressed(KEY_RIGHT) && canMove("right")) {
 		Slide("right");
 		newNumber();
 	}
@@ -253,8 +354,6 @@ void c1024::DrawCurFrame()
 		for (int i = 0; i < (4 * 4); i++) {
 			cells[i / 4][i % 4].DrawCell();
 		}
-		
-
 	}
 
 
