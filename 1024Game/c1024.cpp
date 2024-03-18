@@ -163,9 +163,12 @@ void c1024::Slide(std::string dir)
 					if (cells[i][j].number == 0) {
 						cells[i][j].number = cells[i + 1][j].number;
 						cells[i + 1][j].number = 0;
+						cells[i][j].merged = cells[i + 1][j].merged;
+						cells[i + 1][j].merged = 0;
 					}
-					else if (cells[i][j].number == cells[i + 1][j].number) {
+					else if (cells[i][j].number == cells[i + 1][j].number && !cells[i][j].merged && !cells[i + 1][j].merged) {
 						cells[i][j].number *= 2;
+						cells[i][j].merged = true;
 						cells[i + 1][j].number = 0;
 					}
 				}
@@ -179,9 +182,12 @@ void c1024::Slide(std::string dir)
 					if (cells[i][j].number == 0) {
 						cells[i][j].number = cells[i - 1][j].number;
 						cells[i - 1][j].number = 0;
+						cells[i][j].merged = cells[i - 1][j].merged;
+						cells[i - 1][j].merged = 0;
 					}
-					else if (cells[i][j].number == cells[i - 1][j].number) {
+					else if (cells[i][j].number == cells[i - 1][j].number && !cells[i][j].merged && !cells[i - 1][j].merged) {
 						cells[i][j].number *= 2;
+						cells[i][j].merged = true;
 						cells[i - 1][j].number = 0;
 					}
 				}
@@ -195,9 +201,12 @@ void c1024::Slide(std::string dir)
 					if (cells[i][j].number == 0) {
 						cells[i][j].number = cells[i][j + 1].number;
 						cells[i][j + 1].number = 0;
+						cells[i][j].merged = cells[i][j + 1].merged;
+						cells[i][j + 1].merged = 0;
 					}
-					else if (cells[i][j].number == cells[i][j + 1].number) {
+					else if (cells[i][j].number == cells[i][j + 1].number && !cells[i][j].merged && !cells[i][j + 1].merged) {
 						cells[i][j].number *= 2;
+						cells[i][j].merged = true;
 						cells[i][j + 1].number = 0;
 					}
 				}
@@ -211,15 +220,22 @@ void c1024::Slide(std::string dir)
 					if (cells[i][j].number == 0) {
 						cells[i][j].number = cells[i][j - 1].number;
 						cells[i][j - 1].number = 0;
+						cells[i][j].merged = cells[i][j - 1].merged;
+						cells[i][j - 1].merged = false;
 					}
-					else if (cells[i][j].number == cells[i][j - 1].number) {
+					else if (cells[i][j].number == cells[i][j - 1].number && !cells[i][j].merged && !cells[i][j - 1].merged) {
 						cells[i][j].number *= 2;
+						cells[i][j].merged = true;
 						cells[i][j - 1].number = 0;
 					}
 				}
 			}
 		}
 	}
+
+	for (int i = 0; i < 4; i++)
+		for (int j = 0; j < 4; j++)
+			cells[i][j].merged = false;
 }
 
 void c1024::newNumber()
@@ -273,8 +289,23 @@ void c1024::Start()
 		}
 	}
 
-	newNumber();
-	newNumber();
+	if (debug) {
+		// Horizontal
+		cells[0][0].number = 0;
+		cells[0][1].number = 0;
+		cells[0][2].number = 0;
+		cells[0][3].number = 0;
+
+		// Vertical
+		cells[0][0].number = 0;
+		cells[1][0].number = 4;
+		cells[2][0].number = 4;
+		cells[3][0].number = 8;
+	}
+	else {
+		newNumber();
+		newNumber();
+	}
 }
 
 void c1024::EvalCurFrame()

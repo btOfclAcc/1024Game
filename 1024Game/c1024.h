@@ -23,6 +23,9 @@ public:
 	bool gameWon = false;
 
 
+	bool debug = false;
+
+
 	static const int screenWidth = 850;
 	static const int screenHeight = 850;
 

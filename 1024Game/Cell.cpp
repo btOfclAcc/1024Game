@@ -7,6 +7,7 @@ Cell::Cell(Rectangle rect, int number)
 	this->rect = rect;
 	this->number = number;
 	fontSize = 36;
+	merged = false;
 }
 
 void Cell::DrawCell()
