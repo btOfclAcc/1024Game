@@ -16,6 +16,11 @@ void Cell::DrawCell()
 
 	switch (number)
 	{
+	case 0:
+		color = WHITE;
+		txtStr = "";
+		break;
+
 	case 2:
 		color = WHITE;
 		txtStr = std::to_string(number);

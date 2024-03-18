@@ -12,7 +12,6 @@ class c1024
 public:
 
 #define GAP 10
-#define CELL_HEIGHT 200
 
 	
 	std::vector<std::vector<Cell>> cells;
@@ -25,6 +24,12 @@ public:
 
 	static const int screenWidth = 850;
 	static const int screenHeight = 850;
+
+
+	bool isFull();
+	bool canMove();
+	bool canMove(std::string);
+	void Slide(std::string);
 
 
 	void Main();
